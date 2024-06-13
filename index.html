@@ -1,21 +1,80 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>傻瓜</title>
-<script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Card</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3490dc',
+            secondary: '#ffed4a',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .rotate {
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
 </head>
-
-
-<body>
-<div id="r8rc171ky4" class="flex h-screen w-full items-center justify-center bg-gray-100 dark:bg-gray-900">
-  <div class="space-y-4 text-center">
-    <h1 class="text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-50 sm:text-6xl md:text-7xl">
-      呆子
-    </h1>
-    <h2 class="text-5xl font-bold tracking-tight text-gray-500 dark:text-gray-50 sm:text-6xl md:text-7xl" >禧小宝</h2>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div class="bg-white p-6 rounded-lg shadow-md w-96">
+    <img class="h-32 w-32 mx-auto rounded-full rotate" src="https://picsum.photos/200" alt="Profile Picture">
+    <h2 class="text-2xl font-bold text-primary mt-4 text-center">刘禧</h2>
+    <p class="text-gray-600 text-center">Web Developer</p>
+    <div class="mt-6 text-center">
+      <button class="bg-primary hover:bg-primary-600 text-white px-4 py-2 rounded mr-2">Follow</button>
+      <button class="bg-secondary hover:bg-secondary-600 text-gray-800 px-4 py-2 rounded">Message</button>
+    </div>
+    <div class="mt-6">
+      <h3 class="text-lg font-semibold">About</h3>
+      <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed auctor, magna a efficitur congue, nulla magna efficitur magna, vel bibendum eros nulla a enim.</p>
+    </div>
+    <div class="mt-6">
+      <h3 class="text-lg font-semibold">Skills</h3>
+      <div class="flex flex-wrap">
+        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">HTML</span>
+        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">CSS</span>
+        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">JavaScript</span>
+        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">React</span>
+        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">Node.js</span>
+      </div>
+    </div>
+    <div class="mt-6">
+      <h3 class="text-lg font-semibold">Projects</h3>
+      <ul class="list-disc list-inside text-gray-600">
+        <li>Project 1</li>
+        <li>Project 2</li>
+        <li>Project 3</li>
+      </ul>
+    </div>
+    <div class="mt-6">
+      <h3 class="text-lg font-semibold">Contact</h3>
+      <div class="flex items-center">
+        <svg class="w-6 h-6 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        <span class="text-gray-600">john.doe@example.com</span>
+      </div>
+    </div>
   </div>
-</div>
-</body>
 
+  <script>
+    // Add event listener for button clicks
+    const buttons = document.querySelectorAll('button');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        alert(`You clicked ${button.textContent}`);
+      });
+    });
+  </script>
+</body>
 </html>
