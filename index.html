@@ -1,260 +1,465 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>性格测试</title> <script src="https://cdn.tailwindcss.com"></script> <script> tailwind.config = { theme: { extend: { colors: { primary: '#ff9999', // 改为可爱的粉红色 secondary: '#ffed4a', } } } } </script> <style> /* 添加一些可爱的装饰 */ body { background: linear-gradient(to bottom right, #ffcccc, #ffe6e6); }
-.rounded-lg {
-border-radius: 20px;
-}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>2048</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<!-- 引入jquery -->
+		<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	</head>
+	<body>
+		<!-- 标题分数 -->
+		<header>
+			<h2>2048</h2>
+			<input type="button" id="butt" value="开始游戏" />
+			<p class="scores">得分:<span id="score">0</span></p>
+		</header>
+		<!-- 游戏页面 -->
+		<div class="game">
+			<div class="gride-cell" id="gride1-1"></div>
+			<div class="gride-cell" id="gride1-2"></div>
+			<div class="gride-cell" id="gride1-3"></div>
+			<div class="gride-cell" id="gride1-4"></div>
+			<div class="gride-cell" id="gride2-1"></div>
+			<div class="gride-cell" id="gride2-2"></div>
+			<div class="gride-cell" id="gride2-3"></div>
+			<div class="gride-cell" id="gride2-4"></div>
+			<div class="gride-cell" id="gride3-1"></div>
+			<div class="gride-cell" id="gride3-2"></div>
+			<div class="gride-cell" id="gride3-3"></div>
+			<div class="gride-cell" id="gride3-4"></div>
+			<div class="gride-cell" id="gride4-1"></div>
+			<div class="gride-cell" id="gride4-2"></div>
+			<div class="gride-cell" id="gride4-3"></div>
+			<div class="gride-cell" id="gride4-4"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		function noPullDown(selector) {
+			//禁止页面拖动
+			document.querySelector('body').addEventListener('touchmove', function(e) {
 
-.shadow-md {
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+				if (!selector) {
+					e.preventDefault()
+				} else {
+					// 如果需要部分区域可以滑动，则需传入需要滑动地方的类名
+					if (!document.querySelector(selector).contains(e.target)) {
+						e.preventDefault()
+					}
+				}
+			}, {
+				passive: false
+			})
+		}
+		noPullDown()
+		// 点击开始游戏
+		$('#butt').click(() => {
+			//开始游戏
+			if ($('#butt').val() === '开始游戏') {
+				$('#butt').val('重新开始')
+				blcokGenerate()
+				touch()
+				scoreNumber()
+			} else {
+				//重新开始游戏
+				$('#butt').val('开始游戏')
+				touch()
+				for (var i = 1; i < 5; i++) {
+					//循环1-4列的元素相加
+					for (var e = 1; e < 5; e++) {
 
-.heart {
-display: inline-block;
-width: 16px;
-height: 16px;
-background: #ff9999;
-transform: rotate(45deg);
-position: relative;
-}
+						$(`#gride${i}-${e}`).html('')
 
-.heart::before,
-.heart::after {
-content: "";
-position: absolute;
-width: 16px;
-height: 16px;
-background: #ff9999;
-border-radius: 50%;
-}
 
-.heart::before {
-left: -8px;
-}
+					}
+				}
+				$('#score').html(0)
+			}
+		})
+		//计算总分
+		function scoreNumber() {
+			var score = 0 //总分
+			for (var i = 1; i < 5; i++) {
+				for (var e = 1; e < 5; e++) {
+					score = score + Number($(`#gride${i}-${e}`).text())
+				}
+			}
+			$('#score').html(score)
+		}
+		//生成方块函数
+		function blcokGenerate() {
+			//随机给空白方块生成2,4
+			//1.先定义一个赋值数组
+			var array = [2, 4]
+			//2.根据Math.random()生成随机整数的方法根据获取array的随机索引生成需要的赋值
+			var value = array[Math.floor(Math.random() * array.length)]
+			//3.先判断当前为空的方块行和位置
+			var blockArray = [] //方块行数组
+			var blockAllArray = [] //全部方块数据
+			//循环为空的行方块
+			for (var i = 1; i < 5; i++) {
+				//循环行内为空的方块
+				var nullArray = []
+				for (var e = 1; e < 5; e++) {
+					//为空的方块所在的行内位置数组
+					//如果为空把其索引添加到行内数组中
+					score = score + Number($(`#gride${i}-${e}`).text())
+					if ($(`#gride${i}-${e}`).text() === '') {
+						nullArray.push(e)
+					}
+				}
+				//如果为行内方块不为空添加到行数组中
+				if (nullArray.length !== 0) {
+					blockAllArray.push(nullArray)
+					blockArray.push(i)
+				}
+			}
+			if (blockAllArray.length === 0) {
+				alert('游戏失败，请重新开始游戏！')
+				return
+			}
+			//4.开始给空的方块赋值
 
-.heart::after {
-top: -8px;
-}
+			// 先随机行方块
+			var blockIndex = Math.floor(Math.random() * blockArray.length)
+			var blockValue = blockArray[blockIndex]
+			// 再随机行内方块
+			var blockAllValue = blockAllArray[blockIndex][Math.floor(Math.random() * blockAllArray[blockIndex].length)]
+
+			//5.开始给方块赋值
+			$(`#gride${blockValue}-${blockAllValue}`).html(value)
+
+		}
+
+		// 上滑事件从下面添加的上面
+		function up() {
+
+			if ($('#butt').val() == '开始游戏') {
+				return
+			}
+
+			//防止元素下方为空循环3次
+			for (var w = 0; w < 3; w++) {
+				//循环1-4列
+				for (var i = 4; i > 0; i--) {
+					//循环1-4列的元素相加
+					for (var e = 5; e > 1; e--) {
+						if ($(`#gride${e-1}-${i}`).text() === '') {
+							$(`#gride${e-1}-${i}`).html($(`#gride${e}-${i}`).text())
+							$(`#gride${e}-${i}`).html('')
+
+						} else if ($(`#gride${e}-${i}`).text() === $(`#gride${e-1}-${i}`).text()) {
+							$(`#gride${e-1}-${i}`).html(Number($(`#gride${e}-${i}`).text()) + Number($(`#gride${e-1}-${i}`).text()))
+							$(`#gride${e}-${i}`).html('')
+
+						}
+					}
+				}
+			}
+
+
+			blcokGenerate()
+			scoreNumber()
+		}
+		// 下滑事件
+		function down() {
+
+			if ($('#butt').val() == '开始游戏') {
+				return
+			}
+
+			//防止元素下方为空循环3次
+			for (var w = 0; w < 3; w++) {
+				//循环1-4列
+				for (var i = 1; i < 5; i++) {
+					//循环1-4列的元素相加
+					for (var e = 1; e < 4; e++) {
+						if ($(`#gride${e+1}-${i}`).text() === '') {
+							$(`#gride${e+1}-${i}`).html($(`#gride${e}-${i}`).text())
+							$(`#gride${e}-${i}`).html('')
+
+						} else if ($(`#gride${e}-${i}`).text() === $(`#gride${e+1}-${i}`).text()) {
+							$(`#gride${e+1}-${i}`).html(Number($(`#gride${e}-${i}`).text()) + Number($(`#gride${e+1}-${i}`).text()))
+							$(`#gride${e}-${i}`).html('')
+
+						}
+					}
+				}
+			}
+
+			blcokGenerate()
+			scoreNumber()
+		}
+		// 左滑事件
+		function left() {
+
+			if ($('#butt').val() == '开始游戏') {
+				return
+			}
+			//防止元素下方为空循环3次
+			for (var w = 0; w < 3; w++) {
+				//循环1-4列
+				for (var i = 4; i > 0; i--) {
+					//循环1-4列的元素相加
+					for (var e = 5; e > 1; e--) {
+						if ($(`#gride${i}-${e-1}`).text() === '') {
+							$(`#gride${i}-${e-1}`).html($(`#gride${i}-${e}`).text())
+							$(`#gride${i}-${e}`).html('')
+						} else if ($(`#gride${i}-${e}`).text() === $(`#gride${i}-${e-1}`).text()) {
+							$(`#gride${i}-${e-1}`).html(Number($(`#gride${i}-${e}`).text()) + Number($(`#gride${i}-${e-1}`).text()))
+							$(`#gride${i}-${e}`).html('')
+						}
+					}
+				}
+			}
+			blcokGenerate()
+			scoreNumber()
+		}
+		// 右滑事件
+		function right() {
+
+			if ($('#butt').val() == '开始游戏') {
+				return
+			}
+			//防止元素下方为空循环3次
+			for (var w = 0; w < 3; w++) {
+				//循环1-4列
+				for (var i = 1; i < 5; i++) {
+					//循环1-4列的元素相加
+					for (var e = 1; e < 4; e++) {
+						if ($(`#gride${i}-${e+1}`).text() === '') {
+							$(`#gride${i}-${e+1}`).html($(`#gride${i}-${e}`).text())
+							$(`#gride${i}-${e}`).html('')
+							newRight(i = i, e = e)
+						} else if ($(`#gride${i}-${e}`).text() === $(`#gride${i}-${e+1}`).text()) {
+							$(`#gride${i}-${e+1}`).html(Number($(`#gride${i}-${e+1}`).text()) + Number($(`#gride${i}-${e+1}`).text()))
+							$(`#gride${i}-${e}`).html('')
+							newRight(i = i, e = e)
+						}
+					}
+				}
+			}
+			blcokGenerate()
+			scoreNumber()
+		}
+		// 判断滑动方向
+
+		// 2.根据触摸事件判断用户滑动的方向
+		// touchstart	触摸开始，
+		// touchmove	接触点改变，滑动时	
+		// touchend	触摸结束，手指离开屏幕时	
+		// touchcancel	触摸被取消，当系统停止跟踪触摸的时候触发
+		//触摸事件的返回值
+		// clientX：触摸目标在视口中的x坐标。
+		// clientY：触摸目标在视口中的y坐标。
+		// identifier：标识触摸的唯一ID。
+		// pageX：触摸目标在页面中的x坐标。
+		// pageY：触摸目标在页面中的y坐标。
+		// screenX：触摸目标在屏幕中的x坐标。
+		// screenY：触摸目标在屏幕中的y坐标。
+		// target：触摸的DOM节点目标。
+
+		function touch() { //触摸事件
+
+			if ($('#butt').val() == '开始游戏') {
+				return
+			}
+			//定义全局坐标变量
+			var startX, startY, chendX, chendY;
+			//手指触摸屏幕时触发事件
+			$('body').on('touchstart', function(even) {
+				startX = even.originalEvent.changedTouches[0].clientX //X轴
+				startY = even.originalEvent.changedTouches[0].clientY //Y轴
+			});
+
+			//手指离开屏幕时触发
+			$('body').on('touchend', function() {
+				chendX = event.changedTouches[0].pageX - startX
+				chendY = event.changedTouches[0].pageY - startY
+				if (Math.abs(chendX) > Math.abs(chendY)) { //认定为水平方向滑动
+					if (chendX > 30) { //向右
+						right()
+					} else if (chendX < -30) { //向左
+						left()
+					}
+				} else { //认定为垂直方向滑动
+					if (chendY > 30) { //向下
+						down()
+					} else if (chendY < -30) { //向上
+						up()
+					}
+				}
+
+			})
+		}
+		//触摸事件
+		touch()
+	</script>
+	
+	<script>
+	//rem适应
+		(function(win, lib) {
+		  var doc = win.document;
+		  var docEl = doc.documentElement;
+		  var devicePixelRatio = win.devicePixelRatio;
+		  var dpr = 1;
+		  var scale = 1;
+		
+		  // 设置vierPort
+		  function setViewport() {
+		    dpr = 1;
+		    win.devicePixelRatioValue = dpr;
+		    scale = 1 / dpr;
+		    var metaEl = doc.createElement('meta');
+		    metaEl.setAttribute('name', 'viewport');
+		    metaEl.setAttribute(
+		      'content',
+		      'initial-scale=' +
+		        scale +
+		        ', maximum-scale=' +
+		        scale +
+		        ', minimum-scale=' +
+		        scale +
+		        ', user-scalable=no'
+		    );
+		    if (docEl.firstElementChild) {
+		      docEl.firstElementChild.appendChild(metaEl);
+		    } else {
+		      var wrap = doc.createElement('div');
+		      wrap.appendChild(metaEl);
+		      doc.write(wrap.innerHTML);
+		    }
+		  }
+		
+		  setViewport();
+		  var newBase = 100; // 把页面划分为100等分
+		
+		  // 设置Rem
+		  function setRem() {
+		    var visualView = Math.min(
+		      docEl.getBoundingClientRect().width,
+		      lib.maxWidth
+		    );
+		    newBase = (100 * visualView) / lib.desinWidth;
+		    docEl.style.fontSize = newBase + 'px';
+		  }
+		
+		  var tid;
+		  lib.desinWidth = 640;
+		  lib.baseFont = 18;
+		  lib.maxWidth = 540;
+		  lib.init = function() {
+		    win.addEventListener(
+		      'resize',
+		      function() {
+		        clearTimeout(tid);
+		        tid = setTimeout(setRem, 300);
+		      },
+		      false
+		    );
+		    win.addEventListener(
+		      'pageshow',
+		      function(e) {
+		        if (e.persisted) {
+		          clearTimeout(tid);
+		          tid = setTimeout(setRem, 300);
+		        }
+		      },
+		      false
+		    );
+		    if (doc.readyState === 'complete') {
+		      doc.body.style.fontSize = lib.baseFont * dpr + 'px';
+		    } else {
+		      doc.addEventListener(
+		        'DOMContentLoaded',
+		        function(e) {
+		          doc.body.style.fontSize = lib.baseFont * dpr + 'px';
+		        },
+		        false
+		      );
+		    }
+		    setRem();
+		    docEl.setAttribute('data-dpr', dpr);
+		  };
+		})(window, window['adaptive'] || (window['adaptive'] = {}));
+		window['adaptive'].desinWidth = 750;
+		window['adaptive'].baseFont = 12;
+		window['adaptive'].maxWidth = 540;
+		window['adaptive'].init();
+	</script>
+<style>
+	html {
+		background-color: #ccc0b3;
+	}
+	
+	input {
+		background: none;
+		outline: none;
+		border: none;
+	}
+	
+	/* 标题分数 */
+	header {
+		width: 100%;
+		display: block;
+		text-align: center;
+		margin-top: 0.25rem;
+		color: #fff;
+	}
+	.scores{
+		font-size: 0.38rem;
+	}
+	h2{
+		margin-top: 1.5rem;
+	}
+	
+	header p {
+		font-size: 0.32rem;
+		font-family: arial;
+	}
+	
+	header input {
+		display: block;
+		margin: 0.5rem auto;
+		width: 2rem;
+		font-size: 0.32rem;
+		background-color: #8f7a66;
+		font-family: Arial;
+		color: white;
+		height: 0.8rem;
+		line-height: 0.8rem;
+		text-align: center;
+		border-radius: 0.2rem;
+		text-decoration: none;
+	}
+	
+	/* 游戏页面布局 */
+	.game {
+		width: 6.2rem;
+		height:6.2rem;
+		padding: 0.2rem;
+		margin: 0.5rem auto;
+		background-color: #bbada0;
+		border-radius: 0.1rem;
+		position: relative;
+		margin-top: 0.35rem;
+		vertical-align: middle;
+	}
+	
+	.gride-cell {
+		width: 1.3rem;
+		height: 1.3rem;
+		border-radius: 0.12rem;
+		background-color: #ccc0b3;
+		position: relative;
+		float: left;
+		margin: 0.125rem;
+		line-height: 1.3rem;
+		text-align: center;
+		color: #fff;
+		font-size: 0.48rem;
+	}
+	
 </style>
-
-</head> <body class="flex items-center justify-center h-screen">
-  <div id="startScreen" class="bg-white p-6 rounded-lg shadow-md w-96"> 
-    <h2 class="text-2xl font-bold text-primary text-center">
-      <span class="heart mr-2"></span>性格测试<span class="heart ml-2">
-        
-      </span> </h2> <p class="text-gray-600 text-center mt-4">
-        准备好了解你可爱的性格类型吗?</p> <div class="mt-6 text-center">
-          <button id="startBtn" class="bg-primary hover:bg-primary-600 text-white px-4 py-2 rounded">开始测试</button> </div> </div> <div id="testScreen" class="hidden bg-white p-6 rounded-lg shadow-md w-96"> <h2 class="text-2xl font-bold text-primary text-center mb-4"> <span class="heart mr-2"></span>性格测试题目<span class="heart ml-2"></span> </h2> <div id="questionContainer"></div> <div id="resultContainer" class="hidden mt-6 text-center"></div>
-
-<script>
-const questions = [
-  {
-    question: "当你感到压力很大时,你最常做的事情是什么?",
-    answers: [
-      { text: "锻炼", personality: "introvert" },
-      { text: "吃零食", personality: "extrovert" },
-      { text: "找朋友倾诉", personality: "extrovert" },
-      { text: "独自思考", personality: "introvert" }
-    ]
-  },
-  {
-    question: "在一个聚会上,你通常会做什么?",
-    answers: [
-      { text: "和很多人聊天", personality: "extrovert" },
-      { text: "和熟悉的朋友聊天", personality: "extrovert" },
-      { text: "观察别人", personality: "introvert" },
-      { text: "尽量找机会离开", personality: "introvert" }
-    ]
-  },
-  {
-    question: "如果你在工作中遇到了困难,你会怎么做?",
-    answers: [
-      { text: "独自解决", personality: "introvert" },
-      { text: "寻求同事的帮助", personality: "extrovert" },
-      { text: "向上司汇报", personality: "thinking" },
-      { text: "暂时搁置,等心情好时再处理", personality: "feeling" }
-    ]
-  },
-  {
-    question: "当你感到悲伤时,你通常会如何处理?",
-    answers: [
-      { text: "哭泣", personality: "extrovert" },
-      { text: "写日记", personality: "introvert" },
-      { text: "听音乐", personality: "feeling" },
-      { text: "和朋友谈心", personality: "extrovert" }
-    ]
-  },
-  {
-    question: "你更喜欢以下哪种社交活动?",
-    answers: [
-      { text: "大型派对", personality: "extrovert" },
-      { text: "小型聚会", personality: "extrovert" },
-      { text: "双人约会", personality: "feeling" },
-      { text: "独自一人", personality: "introvert" }
-    ]
-  },
-  {
-    question: "当有人对你发火时,你通常的反应是?",
-    answers: [
-      { text: "立即反击", personality: "extrovert" },
-      { text: "保持沉默", personality: "introvert" },
-      { text: "尝试理解对方的情绪", personality: "thinking" },
-      { text: "离开现场", personality: "introvert" }
-    ]
-  },
-  {
-    question: "当你对自己生气时,你会怎么做?",
-    answers: [
-      { text: "责备自己", personality: "introvert" },
-      { text: "向朋友倾诉", personality: "extrovert" },
-      { text: "做一些放松的事情", personality: "feeling" },
-      { text: "努力改正错误", personality: "thinking" }
-    ]
-  },
-  {
-    question: "你如何处理与朋友的争执?",
-    answers: [
-      { text: "冷静下来后再谈", personality: "thinking" },
-      { text: "立即解决问题", personality: "thinking" },
-      { text: "暂时避开对方", personality: "introvert" },
-      { text: "让步妥协", personality: "feeling" }
-    ]
-  },
-  {
-    question: "你认为你最需要改进的情感能力是?",
-    answers: [
-      { text: "管理压力", personality: "thinking" },
-      { text: "表达愤怒", personality: "extrovert" },
-      { text: "处理悲伤", personality: "feeling" },
-      { text: "增强自信", personality: "introvert" }
-    ]
-  },
-  {
-    question: "当你看到别人悲伤时,你通常会做什么?",
-    answers: [
-      { text: "给予安慰", personality: "extrovert" },
-      { text: "默默陪伴", personality: "thinking" },
-      { text: "不知所措", personality: "introvert" },
-      { text: "避开他们", personality: "introvert" }
-    ]
-  }
-];
-const personalityTypes = {
-"introvert": 0,
-"extrovert": 0,
-"thinking": 0,
-"feeling": 0
-};
-
-let currentQuestion = 0;
-
-const startScreen = document.getElementById('startScreen');
-const testScreen = document.getElementById('testScreen');
-const questionContainer = document.getElementById('questionContainer');
-const resultContainer = document.getElementById('resultContainer');
-
-function startTest() {
-startScreen.classList.add('hidden');
-testScreen.classList.remove('hidden');
-showQuestion();
-}
-
-function showQuestion() {
-if (currentQuestion >= questions.length) {
-showResult();
-return;
-}
-
-const question = questions[currentQuestion];
-let questionHTML = `<h3 class="text-lg font-semibold">${question.question}</h3>`;
-
-for (let i = 0; i < question.answers.length; i++) {
-const answer = question.answers[i];
-questionHTML += `
-<div class="mt-4">
-<label class="inline-flex items-center">
-<input type="radio" name="question${currentQuestion}" value="${answer.text}" class="form-radio text-primary">
-<span class="ml-2">${answer.text}</span>
-</label>
-</div>
-`;
-}
-
-questionHTML += `<button class="bg-primary hover:bg-primary-600 text-white px-4 py-2 rounded mt-4" onclick="submitAnswer()">提交</button>`;
-questionContainer.innerHTML = questionHTML;
-}
-
-function submitAnswer() {
-const selectedAnswer = document.querySelector(`input[name="question${currentQuestion}"]:checked`);
-
-if (selectedAnswer) {
-const answer = selectedAnswer.value;
-if (answer === "锻炼" || answer === "独自思考" || answer === "观察别人" || answer === "独自解决" || answer === "写日记" || answer === "独自一人" || answer === "保持沉默" || answer === "责备自己" || answer === "暂时避开对方") {
-personalityTypes.introvert++;
-} else if (answer === "吃零食" || answer === "找朋友倾诉" || answer === "和很多人聊天" || answer === "寻求同事的帮助" || answer === "哭泣" || answer === "和朋友谈心" || answer === "大型派对" || answer === "小型聚会" || answer === "立即反击" || answer === "向朋友倾诉" || answer === "立即解决问题" || answer === "给予安慰") {
-personalityTypes.extrovert++;
-} else if (answer === "暂时搁置，等心情好时再处理" || answer === "听音乐" || answer === "双人约会" || answer === "离开现场" || answer === "做一些放松的事情" || answer === "让步妥协") {
-personalityTypes.feeling++;
-} else if (answer === "向上司汇报" || answer === "尝试理解对方的情绪" || answer === "努力改正错误" || answer === "冷静下来后再谈" || answer === "管理压力" || answer === "表达愤怒" || answer === "默默陪伴" || answer === "不知所措") {
-personalityTypes.thinking++;
-}
-currentQuestion++;
-showQuestion();
-} else {
-alert('请选择一个答案!');
-}
-}
-
-function showResult() {
-const personalityTypeValues = Object.values(personalityTypes);
-const maxValue = Math.max(...personalityTypeValues);
-const personalityTypesArray = Object.keys(personalityTypes).filter(key => personalityTypes[key] === maxValue);
-
-let resultText = "根据您的回答,您的性格类型是:";
-if (personalityTypesArray.length === 1) {
-resultText += ` ${personalityTypesArray[0]}`;
-} else {
-resultText += ` ${personalityTypesArray.join('、')}`;
-}
-
-resultContainer.innerHTML = `
-<h3 class="text-lg font-semibold">测试结果</h3>
-<p class="text-gray-600 mt-2">${resultText}</p>
-`;
-resultContainer.classList.remove('hidden');
-}
-
-const startBtn = document.getElementById('startBtn');
-startBtn.addEventListener('click', startTest);
-  const personalityExplanations = {
-  "introvert": "内向的人通常较为安静、谨慎,喜欢独处,在做决定前需要深思熟虑。他们擅长专注和倾听,注重个人空间。",
-  "extrovert": "外向的人活跃、健谈、乐于结交新朋友。他们在社交场合表现出色,善于与他人互动。外向的人往往更加乐观积极,喜欢身处群体中。",
-  "thinking": "理性型的人在做决定时更看重事实和逻辑,他们擅长分析和解决问题。这种性格类型的人往往更加客观和公正,在处理事情时会保持冷静。",
-  "feeling": "感性型的人更重视个人情感和价值观,他们善于同理心和关怀他人。这种性格类型的人往往更加富有同情心,在做决定时会考虑情感因素。"
-};
-  function showResult() {
-  const personalityTypeValues = Object.values(personalityTypes);
-  const maxValue = Math.max(...personalityTypeValues);
-  const personalityTypesArray = Object.keys(personalityTypes).filter(key => personalityTypes[key] === maxValue);
-
-  let resultText = "根据您的回答,您的性格类型是:";
-  if (personalityTypesArray.length === 1) {
-    resultText += ` ${personalityTypesArray[0]}`;
-  } else {
-    resultText += ` ${personalityTypesArray.join('、')}`;
-  }
-
-  let explanationText = "";
-  for (const personalityType of personalityTypesArray) {
-    explanationText += `<p class="text-gray-600 mt-2">${personalityExplanations[personalityType]}</p>`;
-  }
-
-  resultContainer.innerHTML = `
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <h3 class="text-lg font-semibold text-primary"><span class="heart mr-2"></span>${resultText}<span class="heart ml-2"></span></h3>
-      ${explanationText}
-    </div>
-  `;
-  resultContainer.classList.remove('hidden');
-}
-</script>
-</body>
 </html>
+
