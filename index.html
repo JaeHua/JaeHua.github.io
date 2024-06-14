@@ -1,37 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>性格测试</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-primary: '#3490dc',
-secondary: '#ffed4a',
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>性格测试</title> <script src="https://cdn.tailwindcss.com"></script> <script> tailwind.config = { theme: { extend: { colors: { primary: '#ff9999', // 改为可爱的粉红色 secondary: '#ffed4a', } } } } </script> <style> /* 添加一些可爱的装饰 */ body { background: linear-gradient(to bottom right, #ffcccc, #ffe6e6); }
+.rounded-lg {
+border-radius: 20px;
 }
-}
-}
-}
-</script>
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-<div id="startScreen" class="bg-white p-6 rounded-lg shadow-md w-96">
-<h2 class="text-2xl font-bold text-primary text-center">性格测试</h2>
-<p class="text-gray-600 text-center mt-4">准备好了解你的性格类型吗?</p>
-<div class="mt-6 text-center">
-<button id="startBtn" class="bg-primary hover:bg-primary-600 text-white px-4 py-2 rounded">开始测试</button>
-</div>
-</div>
 
-<div id="testScreen" class="hidden bg-white p-6 rounded-lg shadow-md w-96">
-<h2 class="text-2xl font-bold text-primary text-center mb-4">性格测试题目</h2>
-<div id="questionContainer"></div>
-<div id="resultContainer" class="hidden mt-6 text-center"></div>
-</div>
+.shadow-md {
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.heart {
+display: inline-block;
+width: 16px;
+height: 16px;
+background: #ff9999;
+transform: rotate(45deg);
+position: relative;
+}
+
+.heart::before,
+.heart::after {
+content: "";
+position: absolute;
+width: 16px;
+height: 16px;
+background: #ff9999;
+border-radius: 50%;
+}
+
+.heart::before {
+left: -8px;
+}
+
+.heart::after {
+top: -8px;
+}
+</style>
+
+</head> <body class="flex items-center justify-center h-screen">
+  <div id="startScreen" class="bg-white p-6 rounded-lg shadow-md w-96"> 
+    <h2 class="text-2xl font-bold text-primary text-center">
+      <span class="heart mr-2"></span>性格测试<span class="heart ml-2">
+        
+      </span> </h2> <p class="text-gray-600 text-center mt-4">
+        准备好了解你可爱的性格类型吗?</p> <div class="mt-6 text-center">
+          <button id="startBtn" class="bg-primary hover:bg-primary-600 text-white px-4 py-2 rounded">开始测试</button> </div> </div> <div id="testScreen" class="hidden bg-white p-6 rounded-lg shadow-md w-96"> <h2 class="text-2xl font-bold text-primary text-center mb-4"> <span class="heart mr-2"></span>性格测试题目<span class="heart ml-2"></span> </h2> <div id="questionContainer"></div> <div id="resultContainer" class="hidden mt-6 text-center"></div>
 
 <script>
 const questions = [
@@ -213,6 +224,37 @@ resultContainer.classList.remove('hidden');
 
 const startBtn = document.getElementById('startBtn');
 startBtn.addEventListener('click', startTest);
+  const personalityExplanations = {
+  "introvert": "内向的人通常较为安静、谨慎,喜欢独处,在做决定前需要深思熟虑。他们擅长专注和倾听,注重个人空间。",
+  "extrovert": "外向的人活跃、健谈、乐于结交新朋友。他们在社交场合表现出色,善于与他人互动。外向的人往往更加乐观积极,喜欢身处群体中。",
+  "thinking": "理性型的人在做决定时更看重事实和逻辑,他们擅长分析和解决问题。这种性格类型的人往往更加客观和公正,在处理事情时会保持冷静。",
+  "feeling": "感性型的人更重视个人情感和价值观,他们善于同理心和关怀他人。这种性格类型的人往往更加富有同情心,在做决定时会考虑情感因素。"
+};
+  function showResult() {
+  const personalityTypeValues = Object.values(personalityTypes);
+  const maxValue = Math.max(...personalityTypeValues);
+  const personalityTypesArray = Object.keys(personalityTypes).filter(key => personalityTypes[key] === maxValue);
+
+  let resultText = "根据您的回答,您的性格类型是:";
+  if (personalityTypesArray.length === 1) {
+    resultText += ` ${personalityTypesArray[0]}`;
+  } else {
+    resultText += ` ${personalityTypesArray.join('、')}`;
+  }
+
+  let explanationText = "";
+  for (const personalityType of personalityTypesArray) {
+    explanationText += `<p class="text-gray-600 mt-2">${personalityExplanations[personalityType]}</p>`;
+  }
+
+  resultContainer.innerHTML = `
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h3 class="text-lg font-semibold text-primary"><span class="heart mr-2"></span>${resultText}<span class="heart ml-2"></span></h3>
+      ${explanationText}
+    </div>
+  `;
+  resultContainer.classList.remove('hidden');
+}
 </script>
 </body>
 </html>
