@@ -1,108 +1,75 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-  <title>封宇澄帅照泄露</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/css/main.css" />
-  <link rel="shortcut icon"
-    href="https://avatars3.githubusercontent.com/u/38198082?s=460&u=e2da43cada61d365f96c9b280d46482e7b2510b8&v=4" />
-  <noscript>
-    <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/css/noscript.css" />
-  </noscript>
-</head>
-
-<body class="is-preload">
-  <!-- Wrapper -->
-  <div id="wrapper">
-    <!-- Header -->
-    <header id="header">
-      <h1><a href="https://github.com/realwds"><strong>Alejandro</strong> </a></h1>
-    </header>
-    <!-- Main -->
-    <div id="main">
-    </div>
-    <!-- Footer -->
-    <footer id="footer" class="panel">
-      <div class="inner split">
-        <div>
-          <section>
-            <h2>控制台</h2>
-            <p>Alejandro相册共有<span id="count_CN"></span>张图片哦，人生的每一帧都值得记录。</p>
-          </section>
-          <section>
-            <ul class="icons">
-              <li><a href="https://gitee.com/wrongcode" class="icon brands fa-github" target="_blank"><span
-                    class="label">Gitee</span></a></li>
-              <li><a href="https://github.com/realwds" class="icon brands fa-github" target="_blank"><span
-                    class="label">GitHub</span></a></li>
-            </ul>
-          </section>
-          <p class="copyright"> &copy; 2020 <a href="https://github.com/realwds">YOYLING &middot; Alejandro</a> . </p>
-        </div>
-        <div>
-          <section>
-            <h2>关于Alejandro</h2>
-            <p>不是每个人都能成为摄影师，但好的摄影作品可以出自任何人。<br />我最喜欢摄影中你无法预期的下一刻。</p>
-          </section>
-        </div>
-      </div>
-    </footer>
-  </div>
-  <script type="text/javascript">
-    var datas = `沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true
-沙雕,2024年06月19日拍摄,https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true`;
-    datas = datas.split("\n");
-    for (var i = 0; i < datas.length; i++) {
-      datas[i] = datas[i].split(",");
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>封宇澄帅照疑似泄露</title>
+  <style>
+    .image-container {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
     }
 
-    function creatArticle(datas) {
-      var parent = document.getElementById("main");
-      for (var i = 0; i < datas.length; i++) {
-        var article = document.createElement("article");
-        article.className = "thumb";
-        parent.appendChild(article);
-        var a = document.createElement("a");
-        a.className = "image";
-        a.href = datas[i][2];
-        article.appendChild(a);
-        var img = document.createElement("img");
-        img.src = datas[i][2]; // + "?x-oss-process=image/resize,w_640/quality,q_85"
-        a.appendChild(img);
-        var h2 = document.createElement("h2");
-        h2.innerHTML = datas[i][0];
-        article.appendChild(h2);
-        var p = document.createElement("p");
-        p.innerHTML = datas[i][1];
-        article.appendChild(p);
+    .image-container img {
+      scroll-snap-align: center;
+      width: 100%;
+      height: auto;
+      flex: 0 0 100%;
+    }
+
+    @media (min-width: 768px) {
+      .image-container img {
+        width: auto;
+        height: 100vh;
+        flex: 0 0 auto;
       }
     }
-    creatArticle(datas);
-    document.getElementById("count_CN").innerHTML = datas.length;
-  </script>
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/jquery.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/jquery.poptrox.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/browser.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/breakpoints.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/util.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/main.js"></script>
-</body>
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <img src="https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true" alt="Image 1">
+    <img src="https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true" alt="Image 2">
+    <img src="https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true" alt="Image 3">
+    <!-- 添加更多图片 -->
+  </div>
 
-</html>
+  <script>
+    const imageContainer = document.querySelector('.image-container');
+    let isDragging = false;
+    let currentX;
+    let initialX;
+    let xOffset = 0;
+
+    imageContainer.addEventListener('mousedown', dragStart);
+    imageContainer.addEventListener('mouseup', dragEnd);
+    imageContainer.addEventListener('mouseleave', dragEnd);
+    imageContainer.addEventListener('mousemove', drag);
+
+    function dragStart(e) {
+      initialX = e.clientX - xOffset;
+      isDragging = true;
+    }
+
+    function dragEnd(e) {
+      initialX = currentX;
+      isDragging = false;
+    }
+
+    function drag(e) {
+      if (isDragging) {
+        e.preventDefault();
+        currentX = e.clientX - initialX;
+        xOffset = currentX;
+        setTranslate(currentX, 0);
+      }
+    }
+
+    function setTranslate(xPos, yPos) {
+      imageContainer.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+    }
+  </script>
+</body>
