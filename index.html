@@ -1,72 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>zzj帅照泄露</title>
-  <style>
-    #imageContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    #myImage {
-      max-width: 100%;
-      max-height: 100%;
-      animation: zoomIn 5s forwards;
-    }
-
-    @keyframes zoomIn {
-      from {
-        transform: scale(0);
-      }
-      to {
-        transform: scale(1);
-      }
-    }
-
-    #blackScreen {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #textOverlay {
-      color: white;
-      font-size: 24px;
-      text-align: center;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="2048.css">
 </head>
 <body>
-  <div id="imageContainer">
-    <img id="myImage" src="213d20788da6a4ebce559285fc233e0.jpg" alt="Your Image">
-  </div>
-  <div id="blackScreen">
-    <p id="textOverlay">zzj你个大傻逼</p>
-  </div>
-
-  <script>
-    const image = document.getElementById('myImage');
-    const blackScreen = document.getElementById('blackScreen');
-    const textOverlay = document.getElementById('textOverlay');
-
-    // 等待图片加载完成
-    image.addEventListener('load', () => {
-      // 在图片放大动画结束后显示黑屏和文字
-      setTimeout(() => {
-        blackScreen.style.display = 'flex';
-      }, 5000);
-    });
-  </script>
+    <p>
+        SCORE:<span>0</span>
+    </p>
+    <div class="all">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="gameover">
+        <p>
+            GAME OVER!!!<br>
+            SCORE:<span>0</span><br>
+            <a href="">try again</a>
+        </p>
+    </div>
+    <script src="2048.js"></script>
 </body>
 </html>
