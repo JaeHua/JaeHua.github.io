@@ -1,93 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile Card</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: '#3490dc',
-            secondary: '#ffed4a',
-          }
-        }
+  <title>照片展示</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/css/main.css" />
+  <link rel="shortcut icon"
+    href="https://avatars3.githubusercontent.com/u/38198082?s=460&u=e2da43cada61d365f96c9b280d46482e7b2510b8&v=4" />
+  <noscript>
+    <link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/css/noscript.css" />
+  </noscript>
+</head>
+
+<body class="is-preload">
+  <!-- Wrapper -->
+  <div id="wrapper">
+    <!-- Header -->
+    <header id="header">
+      <h1><a href="https://github.com/realwds"><strong>Alejandro</strong> </a></h1>
+      <nav>
+        <ul>
+          <li><a href="https://github.com/realwds" class="">返回主页</a></li>
+          <li><a href="#footer" class="icon solid fa-info-circle">关于</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Main -->
+    <div id="main">
+    </div>
+    <!-- Footer -->
+    <footer id="footer" class="panel">
+      <div class="inner split">
+        <div>
+          <section>
+            <h2>控制台</h2>
+            <p>Alejandro相册共有<span id="count_CN"></span>张图片哦，人生的每一帧都值得记录。</p>
+          </section>
+          <section>
+            <ul class="icons">
+              <li><a href="https://gitee.com/wrongcode" class="icon brands fa-github" target="_blank"><span
+                    class="label">Gitee</span></a></li>
+              <li><a href="https://github.com/realwds" class="icon brands fa-github" target="_blank"><span
+                    class="label">GitHub</span></a></li>
+            </ul>
+          </section>
+          <p class="copyright"> &copy; 2020 <a href="https://github.com/realwds">YOYLING &middot; Alejandro</a> . </p>
+        </div>
+        <div>
+          <section>
+            <h2>关于Alejandro</h2>
+            <p>不是每个人都能成为摄影师，但好的摄影作品可以出自任何人。<br />我最喜欢摄影中你无法预期的下一刻。</p>
+          </section>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <script type="text/javascript">
+    var datas = `沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif
+沙雕,2018年07月21日拍摄,https://n.sinaimg.cn/tech/transform/427/w178h249/20201120/f0fa-kefmpha9628164.gif`;
+    datas = datas.split("\n");
+    for (var i = 0; i < datas.length; i++) {
+      datas[i] = datas[i].split(",");
+    }
+
+    function creatArticle(datas) {
+      var parent = document.getElementById("main");
+      for (var i = 0; i < datas.length; i++) {
+        var article = document.createElement("article");
+        article.className = "thumb";
+        parent.appendChild(article);
+        var a = document.createElement("a");
+        a.className = "image";
+        a.href = datas[i][2];
+        article.appendChild(a);
+        var img = document.createElement("img");
+        img.src = datas[i][2]; // + "?x-oss-process=image/resize,w_640/quality,q_85"
+        a.appendChild(img);
+        var h2 = document.createElement("h2");
+        h2.innerHTML = datas[i][0];
+        article.appendChild(h2);
+        var p = document.createElement("p");
+        p.innerHTML = datas[i][1];
+        article.appendChild(p);
       }
     }
+    creatArticle(datas);
+    document.getElementById("count_CN").innerHTML = datas.length;
   </script>
-  <style>
-    .rotate {
-      animation: spin 10s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
-</head>
-<body class="bg-gray-100 flex items-center justify-center h-screen">
-  <button id="showProfileBtn" class="bg-primary hover:bg-primary-600 text-white px-4 py-2 rounded">Show Profile</button>
-
-  <div id="profileCard" class="hidden bg-white p-6 rounded-lg shadow-md w-96">
-    <img id="profilePicture" class="h-32 w-32 mx-auto rounded-full rotate" src="" alt="Profile Picture">
-    <h2 class="text-2xl font-bold text-primary mt-4 text-center">封宇澄</h2>
-    <p class="text-gray-600 text-center">高二学生</p>
-    <div class="mt-6 text-center">
-      <button class="bg-primary hover:bg-primary-600 text-white px-4 py-2 rounded mr-2">Follow</button>
-      <button class="bg-secondary hover:bg-secondary-600 text-gray-800 px-4 py-2 rounded">Message</button>
-    </div>
-    <div class="mt-6">
-      <h3 class="text-lg font-semibold">关于</h3>
-      <p class="text-gray-600">Yoo,我是封宇澄，我是詹姆斯和吸螺的头号铁粉，我打篮球超棒的，又高又帅，爱上我的女生记得联系我哦~</p>
-    </div>
-    <div class="mt-6">
-      <h3 class="text-lg font-semibold">爱好</h3>
-      <div class="flex flex-wrap">
-        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">打篮球</span>
-        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">摸鱼</span>
-        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">追剧</span>
-        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">打王者</span>
-        <span class="bg-primary text-white px-3 py-1 rounded-full m-1">刷抖音</span>
-      </div>
-    </div>
-    <div class="mt-6">
-      <h3 class="text-lg font-semibold">荣誉</h3>
-      <ul class="list-disc list-inside text-gray-600">
-        <li>2022王者荣耀巅峰前10万选手</li>
-        <li>2023和平精英王牌选手</li>
-        <li>2024最佳饮水机球员</li>
-      </ul>
-    </div>
-    <div class="mt-6">
-      <h3 class="text-lg font-semibold">Contact</h3>
-      <div class="flex items-center">
-        <svg class="w-6 h-6 text-primary mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-        <span class="text-gray-600">1606300943@qq.com</span>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Add event listener for button clicks
-    const buttons = document.querySelectorAll('button');
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        alert(`You clicked ${button.textContent}`);
-      });
-    });
-
-    // Show/hide profile card
-    const showProfileBtn = document.getElementById('showProfileBtn');
-    const profileCard = document.getElementById('profileCard');
-    const profilePicture = document.getElementById('profilePicture');
-
-    showProfileBtn.addEventListener('click', () => {
-      profileCard.classList.remove('hidden');
-      showProfileBtn.classList.add('hidden');
-      profilePicture.src = 'https://cdn-icons-png.flaticon.com/128/2194/2194807.png';
-    });
-  </script>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/jquery.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/jquery.poptrox.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/browser.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/breakpoints.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/util.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/616620131/photo-page-for-typecho@2.0/Multiverse/js/main.js"></script>
 </body>
+
 </html>
