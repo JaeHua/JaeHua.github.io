@@ -1,75 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>封宇澄帅照疑似泄露</title>
+  <title>封宇澄帅照泄露</title>
   <style>
-    .image-container {
+    #imageContainer {
       display: flex;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x mandatory;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    .image-container img {
-      scroll-snap-align: center;
-      width: 100%;
-      height: auto;
-      flex: 0 0 100%;
+    #myImage {
+      max-width: 100%;
+      max-height: 100%;
+      animation: zoomIn 5s forwards;
     }
 
-    @media (min-width: 768px) {
-      .image-container img {
-        width: auto;
-        height: 100vh;
-        flex: 0 0 auto;
+    @keyframes zoomIn {
+      from {
+        transform: scale(0);
       }
+      to {
+        transform: scale(1);
+      }
+    }
+
+    #blackScreen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: black;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #textOverlay {
+      color: white;
+      font-size: 24px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
-  <div class="image-container">
-    <img src="https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true" alt="Image 1">
-    <img src="https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true" alt="Image 2">
-    <img src="https://github.com/JaeHua/JaeHua.github.io/blob/main/fa100a6b323b0c991072f5f61575696.jpg?raw=true" alt="Image 3">
-    <!-- 添加更多图片 -->
+  <div id="imageContainer">
+    <img id="myImage" src="http://www.xiaocr.fun/wp-content/uploads/2024/06/fa100a6b323b0c991072f5f61575696-300x298.jpg" alt="Your Image">
+  </div>
+  <div id="blackScreen">
+    <p id="textOverlay">封宇澄你个大**可爱</p>
   </div>
 
   <script>
-    const imageContainer = document.querySelector('.image-container');
-    let isDragging = false;
-    let currentX;
-    let initialX;
-    let xOffset = 0;
+    const image = document.getElementById('myImage');
+    const blackScreen = document.getElementById('blackScreen');
+    const textOverlay = document.getElementById('textOverlay');
 
-    imageContainer.addEventListener('mousedown', dragStart);
-    imageContainer.addEventListener('mouseup', dragEnd);
-    imageContainer.addEventListener('mouseleave', dragEnd);
-    imageContainer.addEventListener('mousemove', drag);
-
-    function dragStart(e) {
-      initialX = e.clientX - xOffset;
-      isDragging = true;
-    }
-
-    function dragEnd(e) {
-      initialX = currentX;
-      isDragging = false;
-    }
-
-    function drag(e) {
-      if (isDragging) {
-        e.preventDefault();
-        currentX = e.clientX - initialX;
-        xOffset = currentX;
-        setTranslate(currentX, 0);
-      }
-    }
-
-    function setTranslate(xPos, yPos) {
-      imageContainer.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-    }
+    // 等待图片加载完成
+    image.addEventListener('load', () => {
+      // 在图片放大动画结束后显示黑屏和文字
+      setTimeout(() => {
+        blackScreen.style.display = 'flex';
+      }, 5000);
+    });
   </script>
 </body>
+</html>
